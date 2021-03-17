@@ -16,11 +16,31 @@
 ### 后端
 基于 SpringBoot 框架开发，分模块设计，使用基于贫血模型的传统开发模式。
 
+#### 功能设计
+1. 用户信息模块（用户信息管理）monitoring-system-user
+2. 设备信息模块（设备信息管理）monitoring-system-device
+2. 在线视频模块（在线播放）monitoring-system-online
+3. 离线视频模块（离线播放）monitoring-system-offline
+
 #### 模块设计
-1. 用户信息模块（用户信息管理）
-2. 设备信息模块（设备信息管理）
-2. 在线视频模块（在线播放）
-3. 离线视频模块（离线播放）
+
+
+1. 存储模块，monitoring-system-repo
+2. 服务模块，monitoring-system-service
+3. Web 模块，monitoring-system-web
+4. 公共模块，monitoring-system-common
+
+##### 存储模块 monitoring-system-repo
+> 提供例如数据库等底层数据的存取接口。用户信息、设备信息等拟采用 Mysql 数据库存取，视频数据采用本地文件系统存取。
+
+##### 服务模块 monitoring-system-service
+> 提供存储模块与 Web 模块交互的接口。
+
+##### Web 模块 monitoring-system-web
+> 提供与前端交互的接口。
+
+##### 公共模块 monitoring-system-common
+> 提供公共能力。
 
 ### 前端
  基于微信小程序，使用 Vant 组件库进行开发。
