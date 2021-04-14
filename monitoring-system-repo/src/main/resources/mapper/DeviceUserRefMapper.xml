@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xbyrh.mapper.EmployeeMapper">
-  <resultMap id="BaseResultMap" type="com.xbyrh.entity.Employee">
+<mapper namespace="com.xbyrh.mapper.DeviceUserRefMapper">
+  <resultMap id="BaseResultMap" type="com.xbyrh.entity.DeviceUserRef">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
-    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -39,16 +39,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, employee_name, avatar_url, create_time, update_time
+    id, device_id, user_id, is_delete, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="com.xbyrh.entity.EmployeeExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xbyrh.entity.DeviceUserRefExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from employee
+    from device_user_ref
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -59,35 +59,35 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from employee
+    from device_user_ref
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from employee
+    delete from device_user_ref
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.xbyrh.entity.Employee">
-    insert into employee (id, user_id, employee_name, 
-      avatar_url, create_time, update_time
+  <insert id="insert" parameterType="com.xbyrh.entity.DeviceUserRef">
+    insert into device_user_ref (id, device_id, user_id, 
+      is_delete, create_time, update_time
       )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{employeeName,jdbcType=VARCHAR}, 
-      #{avatarUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xbyrh.entity.Employee">
-    insert into employee
+  <insert id="insertSelective" parameterType="com.xbyrh.entity.DeviceUserRef">
+    insert into device_user_ref
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
       <if test="userId != null">
         user_id,
       </if>
-      <if test="employeeName != null">
-        employee_name,
-      </if>
-      <if test="avatarUrl != null">
-        avatar_url,
+      <if test="isDelete != null">
+        is_delete,
       </if>
       <if test="createTime != null">
         create_time,
@@ -100,14 +100,14 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
       <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT},
       </if>
-      <if test="employeeName != null">
-        #{employeeName,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null">
-        #{avatarUrl,jdbcType=VARCHAR},
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -117,17 +117,17 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xbyrh.entity.Employee">
-    update employee
+  <update id="updateByPrimaryKeySelective" parameterType="com.xbyrh.entity.DeviceUserRef">
+    update device_user_ref
     <set>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="employeeName != null">
-        employee_name = #{employeeName,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null">
-        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -138,20 +138,20 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xbyrh.entity.Employee">
-    update employee
-    set user_id = #{userId,jdbcType=VARCHAR},
-      employee_name = #{employeeName,jdbcType=VARCHAR},
-      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.xbyrh.entity.DeviceUserRef">
+    update device_user_ref
+    set device_id = #{deviceId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      is_delete = #{isDelete,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <resultMap id="BaseResultMap" type="com.xbyrh.entity.Employee">
+  <resultMap id="BaseResultMap" type="com.xbyrh.entity.DeviceUserRef">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
-    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -185,16 +185,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, employee_name, avatar_url, create_time, update_time
+    id, device_id, user_id, is_delete, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="com.xbyrh.entity.EmployeeExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xbyrh.entity.DeviceUserRefExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from employee
+    from device_user_ref
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -205,35 +205,35 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from employee
+    from device_user_ref
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from employee
+    delete from device_user_ref
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.xbyrh.entity.Employee">
-    insert into employee (id, user_id, employee_name, 
-      avatar_url, create_time, update_time
+  <insert id="insert" parameterType="com.xbyrh.entity.DeviceUserRef">
+    insert into device_user_ref (id, device_id, user_id, 
+      is_delete, create_time, update_time
       )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{employeeName,jdbcType=VARCHAR}, 
-      #{avatarUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xbyrh.entity.Employee">
-    insert into employee
+  <insert id="insertSelective" parameterType="com.xbyrh.entity.DeviceUserRef">
+    insert into device_user_ref
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
       <if test="userId != null">
         user_id,
       </if>
-      <if test="employeeName != null">
-        employee_name,
-      </if>
-      <if test="avatarUrl != null">
-        avatar_url,
+      <if test="isDelete != null">
+        is_delete,
       </if>
       <if test="createTime != null">
         create_time,
@@ -246,14 +246,14 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
       <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=BIGINT},
       </if>
-      <if test="employeeName != null">
-        #{employeeName,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null">
-        #{avatarUrl,jdbcType=VARCHAR},
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -263,17 +263,17 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xbyrh.entity.Employee">
-    update employee
+  <update id="updateByPrimaryKeySelective" parameterType="com.xbyrh.entity.DeviceUserRef">
+    update device_user_ref
     <set>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="employeeName != null">
-        employee_name = #{employeeName,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null">
-        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -284,11 +284,11 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xbyrh.entity.Employee">
-    update employee
-    set user_id = #{userId,jdbcType=VARCHAR},
-      employee_name = #{employeeName,jdbcType=VARCHAR},
-      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.xbyrh.entity.DeviceUserRef">
+    update device_user_ref
+    set device_id = #{deviceId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      is_delete = #{isDelete,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

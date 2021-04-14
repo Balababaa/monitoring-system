@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DeviceEmployeeRefExample {
+public class DeviceUserRefExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public DeviceEmployeeRefExample() {
+    public DeviceUserRefExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -225,63 +225,63 @@ public class DeviceEmployeeRefExample {
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdIsNull() {
-            addCriterion("employee_id is null");
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdIsNotNull() {
-            addCriterion("employee_id is not null");
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdEqualTo(Long value) {
-            addCriterion("employee_id =", value, "employeeId");
+        public Criteria andUserIdEqualTo(Long value) {
+            addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdNotEqualTo(Long value) {
-            addCriterion("employee_id <>", value, "employeeId");
+        public Criteria andUserIdNotEqualTo(Long value) {
+            addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdGreaterThan(Long value) {
-            addCriterion("employee_id >", value, "employeeId");
+        public Criteria andUserIdGreaterThan(Long value) {
+            addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("employee_id >=", value, "employeeId");
+        public Criteria andUserIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdLessThan(Long value) {
-            addCriterion("employee_id <", value, "employeeId");
+        public Criteria andUserIdLessThan(Long value) {
+            addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdLessThanOrEqualTo(Long value) {
-            addCriterion("employee_id <=", value, "employeeId");
+        public Criteria andUserIdLessThanOrEqualTo(Long value) {
+            addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdIn(List<Long> values) {
-            addCriterion("employee_id in", values, "employeeId");
+        public Criteria andUserIdIn(List<Long> values) {
+            addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdNotIn(List<Long> values) {
-            addCriterion("employee_id not in", values, "employeeId");
+        public Criteria andUserIdNotIn(List<Long> values) {
+            addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdBetween(Long value1, Long value2) {
-            addCriterion("employee_id between", value1, value2, "employeeId");
+        public Criteria andUserIdBetween(Long value1, Long value2) {
+            addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andEmployeeIdNotBetween(Long value1, Long value2) {
-            addCriterion("employee_id not between", value1, value2, "employeeId");
+        public Criteria andUserIdNotBetween(Long value1, Long value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
 

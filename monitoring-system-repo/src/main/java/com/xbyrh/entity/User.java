@@ -2,14 +2,16 @@ package com.xbyrh.entity;
 
 import java.util.Date;
 
-public class Employee {
+public class User {
     private Long id;
 
-    private String userId;
+    private Long uid;
 
-    private String employeeName;
+    private String nickName;
 
     private String avatarUrl;
+
+    private String openId;
 
     private Date createTime;
 
@@ -23,20 +25,20 @@ public class Employee {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public Long getUid() {
+        return uid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUid(Long uid) {
+        this.uid = uid;
     }
 
-    public String getEmployeeName() {
-        return employeeName;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName == null ? null : employeeName.trim();
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
     }
 
     public String getAvatarUrl() {
@@ -45,6 +47,14 @@ public class Employee {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 
     public Date getCreateTime() {

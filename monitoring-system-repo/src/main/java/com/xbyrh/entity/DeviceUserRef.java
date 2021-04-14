@@ -2,12 +2,12 @@ package com.xbyrh.entity;
 
 import java.util.Date;
 
-public class DeviceEmployeeRef {
+public class DeviceUserRef {
     private Long id;
 
     private Long deviceId;
 
-    private Long employeeId;
+    private Long userId;
 
     private Integer isDelete;
 
@@ -31,12 +31,12 @@ public class DeviceEmployeeRef {
         this.deviceId = deviceId;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Integer getIsDelete() {
