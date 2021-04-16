@@ -33,6 +33,14 @@
                 <artifactId>lombok</artifactId>
             </dependency>
             <dependency>
+                <groupId>com.xbyrh</groupId>
+                <artifactId>monitoring-system-service</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+            </dependency>
+            <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
             </dependency>
@@ -46,8 +54,24 @@
                 <artifactId>fastjson</artifactId>
             </dependency>
             <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+            </dependency>
+            <dependency>
                 <groupId>com.xbyrh</groupId>
                 <artifactId>monitoring-system-common</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.xbyrh</groupId>
+                <artifactId>monitoring-system-repo</artifactId>
+            </dependency>
+            <dependency>
+                <groupId> org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -56,7 +56,7 @@ public class CommonResultControllerAdvice implements ResponseBodyAdvice<Object> 
             return;
         }
 
-        BaseResponse<?> baseResponse = BaseResponse.ok(request);
+        BaseResponse<?> baseResponse = BaseResponse.ok(returnBody);
         bodyContainer.setValue(baseResponse);
     }
 

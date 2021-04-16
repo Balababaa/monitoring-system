@@ -2,3 +2,14 @@ open-id:
   url: https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code
   app-id: wx7f1517939019e36b
   secret: 0e5ad1dbceda2992664f7dfc1176e7b3
+
+
+spring:
+  datasource:
+      url: jdbc:mysql://47.112.27.55:3306/monitoring_system?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: test
+      password: X9xky?8lxEK!
+      driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*

@@ -1,20 +1,20 @@
-package com.xbyrh.web.model.dto;
+package com.xbyrh.web.model.params;
 
 import lombok.Data;
 
 /**
- * created on 2021/4/14.
+ * create at 2021/4/15
  *
  * @author chenxinhui
  */
 
 @Data
-public class UserDTO {
-
-    private Long uid;
+public class UserInfoParam {
 
     private String nickName;
 
     private String avatarUrl;
+
+    private String openid;
 
 }

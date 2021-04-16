@@ -1,9 +1,16 @@
 package com.xbyrh.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.xbyrh.common.annotations.NoOpenid;
+import com.xbyrh.common.context.AuthContext;
 import com.xbyrh.common.utils.HttpUtil;
+import com.xbyrh.repo.entity.User;
+import com.xbyrh.service.IUserService;
 import com.xbyrh.web.model.dto.OpenIdDTO;
+import com.xbyrh.web.model.dto.UserDTO;
+import com.xbyrh.web.model.mapper.UserMapper;
 import com.xbyrh.web.model.params.OpenIdParam;
+import com.xbyrh.web.model.params.UserInfoParam;
 import com.xbyrh.web.model.support.BaseResponse;
 import com.xbyrh.web.properties.OpenIdProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +29,13 @@ public class UserController {
     @Autowired
     private OpenIdProperties openIdProperties;
 
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private IUserService userService;
+
+    @NoOpenid
     @PostMapping("authorize")
     public OpenIdDTO getOpenId(@RequestBody OpenIdParam openIdParam) {
         String url = String.format(openIdProperties.getUrl(), openIdProperties.getAppId(), openIdProperties.getSecret(), openIdParam.getCode());
@@ -32,8 +46,16 @@ public class UserController {
 
     @GetMapping("detail")
     public UserDTO detail(){
+        return userMapper.toDTO(AuthContext.getUser());
+    }
 
+    @NoOpenid
+    @PostMapping("modify")
+    public BaseResponse<String> modifyUserInfo(@RequestBody UserInfoParam userInfoParam){
+        User user = userMapper.fromParam(userInfoParam);
+        userService.modifyUserInfo(user);
 
+        return BaseResponse.ok("");
     }
 
 }
