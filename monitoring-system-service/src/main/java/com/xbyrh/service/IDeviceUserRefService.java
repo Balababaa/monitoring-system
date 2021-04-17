@@ -13,7 +13,4 @@ public interface IDeviceUserRefService {
 
     List<Device> getDevicesByUid(Long uid);
 
-    List<Device> getDevicesByUid(Long uid, String deviceName, Integer deviceType);
-
-
 }

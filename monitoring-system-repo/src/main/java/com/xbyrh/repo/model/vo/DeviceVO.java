@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class DeviceVO {
 
+    private Long id;
+
     private String deviceName;
 
     private Integer deviceType;

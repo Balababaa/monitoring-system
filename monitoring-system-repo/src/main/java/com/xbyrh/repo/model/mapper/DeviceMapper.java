@@ -1,6 +1,8 @@
 package com.xbyrh.repo.model.mapper;
 
 import com.xbyrh.repo.entity.Device;
+import com.xbyrh.repo.model.bo.DeviceBO;
+import com.xbyrh.repo.model.params.DeviceAddParam;
 import com.xbyrh.repo.model.vo.DeviceVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,5 +22,7 @@ public interface DeviceMapper {
     DeviceVO toVO(Device device);
 
     List<DeviceVO> toVOList(List<Device> deviceList);
+
+    DeviceBO toBO(DeviceAddParam deviceAddParam);
 
 }

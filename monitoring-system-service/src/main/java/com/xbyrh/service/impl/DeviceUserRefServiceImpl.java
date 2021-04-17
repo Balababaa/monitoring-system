@@ -28,9 +28,6 @@ public class DeviceUserRefServiceImpl implements IDeviceUserRefService {
     private DeviceUserRefMapper deviceUserRefMapper;
 
     @Autowired
-    private DeviceMapper deviceMapper;
-
-    @Autowired
     private IDeviceService deviceService;
 
     @Override
@@ -48,20 +45,6 @@ public class DeviceUserRefServiceImpl implements IDeviceUserRefService {
         List<Long> deviceIdList = deviceUserRefList.stream().map(DeviceUserRef::getDeviceId).collect(Collectors.toList());
 
         return deviceService.getDevicesByIds(deviceIdList);
-    }
-
-    @Override
-    public List<Device> getDevicesByUid(Long uid, String deviceName, Integer deviceType) {
-        DeviceUserRefExample example = new DeviceUserRefExample();
-        example.createCriteria().andUidEqualTo(uid);
-
-        List<Device> deviceList = deviceMapper.getDevicesByUid(uid, deviceName, deviceType);
-
-        if (CollectionUtils.isEmpty(deviceList)) {
-            return new ArrayList<>();
-        }
-
-        return deviceList;
     }
 
 }

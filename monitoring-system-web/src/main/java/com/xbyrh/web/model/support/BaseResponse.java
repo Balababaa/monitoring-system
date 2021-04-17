@@ -37,4 +37,7 @@ public class BaseResponse<T> {
         return new BaseResponse<>(ResponseEnum.SUCCESS, data);
     }
 
+    public static BaseResponse<String> ok() {
+        return new BaseResponse<>(ResponseEnum.SUCCESS, "");
+    }
 }

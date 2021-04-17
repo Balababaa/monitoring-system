@@ -12,4 +12,4 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
 
 mybatis:
-  mapper-locations: classpath:mapper/*/*.xml
+  mapper-locations: classpath:mapper/base/*.xml,classpath:mapper/extend/*.xml

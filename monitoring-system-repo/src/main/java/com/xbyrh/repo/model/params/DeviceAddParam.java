@@ -1,4 +1,4 @@
-package com.xbyrh.web.model.params;
+package com.xbyrh.repo.model.params;
 
 import lombok.Data;
 
@@ -9,7 +9,9 @@ import lombok.Data;
  */
 
 @Data
-public class DeviceParam {
+public class DeviceAddParam {
+
+    private Long id;
 
     private String deviceName;
 

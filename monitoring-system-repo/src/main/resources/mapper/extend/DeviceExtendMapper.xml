@@ -10,6 +10,18 @@
     <if test="deviceType != null">
       and device.device_type = #{deviceType}
     </if>
+    limit #{offset}, #{limit}
+  </select>
+
+  <select id="countByUserId" resultType="java.lang.Long">
+    select count(1)
+    from device join device_user_ref on device.id = device_user_ref.device_id where device_user_ref.uid = #{uid}
+    <if test="deviceName != null">
+      and device.device_name like CONCAT('%',#{deviceName},'%')
+    </if>
+    <if test="deviceType != null">
+      and device.device_type = #{deviceType}
+    </if>
   </select>
 
 </mapper>
