@@ -29,6 +29,10 @@ public class BaseResponse<T> {
         this.data = data;
     }
 
+    public BaseResponse() {
+
+    }
+
     public static <T> BaseResponse<T> ok(T data) {
         return new BaseResponse<>(ResponseEnum.SUCCESS, data);
     }

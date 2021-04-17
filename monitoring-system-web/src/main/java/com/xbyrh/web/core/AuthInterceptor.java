@@ -1,8 +1,10 @@
 package com.xbyrh.web.core;
 
-import com.xbyrh.common.annotations.NoOpenid;
+import com.xbyrh.common.annotations.NoAuth;
+import com.xbyrh.common.constant.RedisKeyConstant;
 import com.xbyrh.common.context.AuthContext;
 import com.xbyrh.repo.entity.User;
+import com.xbyrh.service.IRedisService;
 import com.xbyrh.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IRedisService redisService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(!(handler instanceof HandlerMethod)){
@@ -31,18 +36,25 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-        if (handlerMethod.hasMethodAnnotation(NoOpenid.class)) {
+        if (handlerMethod.hasMethodAnnotation(NoAuth.class)) {
             return true;
         }
 
+        String loginToken = request.getHeader("login_token");
 
-        String openid = request.getHeader("openid");
-
-        if (openid == null) {
+        if (loginToken == null) {
             return false;
         }
 
-        User user = userService.getUserByOpenid(openid);
+        String value = redisService.get(RedisKeyConstant.ACCESS_TOKEN_CACHE_PREFIX + loginToken);
+
+        if (value == null) {
+            return false;
+        }
+
+        Long userId = Long.valueOf(value);
+
+        User user = userService.getById(userId);
 
         AuthContext.setUser(user);
 

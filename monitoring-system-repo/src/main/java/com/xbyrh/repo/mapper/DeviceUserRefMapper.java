@@ -1,5 +1,6 @@
 package com.xbyrh.repo.mapper;
 
+import com.xbyrh.repo.entity.Device;
 import com.xbyrh.repo.entity.DeviceUserRef;
 import com.xbyrh.repo.entity.DeviceUserRefExample;
 import java.util.List;
@@ -60,4 +61,6 @@ public interface DeviceUserRefMapper {
      * @mbggenerated Fri Apr 16 14:15:51 CST 2021
      */
     int updateByPrimaryKey(DeviceUserRef record);
+
+
 }

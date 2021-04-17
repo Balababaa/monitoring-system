@@ -23,35 +23,35 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public User getUserByOpenid(String openid) {
+    public User getByUsername(String username) {
         UserExample userExample = new UserExample();
-        userExample.createCriteria().andOpenidEqualTo(openid);
+        userExample.createCriteria().andUsernameEqualTo(username);
+
         List<User> userList = userMapper.selectByExample(userExample);
 
-        if (CollectionUtils.isEmpty(userList)) {
-            throw new NotFoundException(String.format("openid: %s is not exist", openid));
+        if(CollectionUtils.isEmpty(userList)){
+            throw new NotFoundException(String.format("user(username = %s) not found!", username));
         }
 
         return userList.get(0);
     }
 
     @Override
-    public User modifyUserInfo(User user) {
-        try {
-            User userInDB = getUserByOpenid(user.getOpenid());
+    public User getByEmail(String email) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andEmailEqualTo(email);
 
-            userInDB.setNickName(user.getNickName());
-            userInDB.setAvatarUrl(user.getAvatarUrl());
+        List<User> userList = userMapper.selectByExample(userExample);
 
-            userMapper.updateByPrimaryKey(userInDB);
-
-            return user;
-        } catch (NotFoundException e) {
-            //todo
-            user.setUid(System.currentTimeMillis() / 100000000);
-            userMapper.insertSelective(user);
-            return user;
+        if(CollectionUtils.isEmpty(userList)){
+            throw new NotFoundException(String.format("user(email = %s) not found!", email));
         }
 
+        return userList.get(0);
+    }
+
+    @Override
+    public User getById(Long userId) {
+        return userMapper.selectByPrimaryKey(userId);
     }
 }

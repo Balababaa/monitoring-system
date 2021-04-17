@@ -3,12 +3,14 @@ package com.xbyrh.web.controller;
 import com.xbyrh.common.context.AuthContext;
 import com.xbyrh.repo.entity.Device;
 import com.xbyrh.repo.entity.User;
+import com.xbyrh.repo.model.mapper.DeviceMapper;
+import com.xbyrh.repo.model.vo.DeviceVO;
 import com.xbyrh.service.IDeviceUserRefService;
 import com.xbyrh.web.model.dto.DeviceDTO;
-import com.xbyrh.web.model.mapper.DeviceMapper;
 import com.xbyrh.web.model.params.DeviceListParam;
 import com.xbyrh.web.model.params.DeviceParam;
 import com.xbyrh.web.model.support.BaseResponse;
+import com.xbyrh.web.model.support.PaginationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
  */
 
 @RestController
-@RequestMapping("device")
+@RequestMapping("/api/device")
 public class DeviceController {
 
     @Autowired
@@ -32,15 +34,17 @@ public class DeviceController {
     private DeviceMapper deviceMapper;
 
     @GetMapping("list")
-    public List<DeviceDTO> deviceList(Integer deviceType) {
+    public PaginationResponse<DeviceVO> deviceList(DeviceListParam deviceListParam) {
         User user = AuthContext.getUser();
-        List<Device> deviceList = deviceUserRefService.getDevicesByUid(user.getUid());
+        //todo 分页
 
-        if (deviceType != null) {
-            deviceList = deviceList.stream().filter(device -> device.getDeviceType().equals(deviceType)).collect(Collectors.toList());
+        if(deviceListParam!=null) {
+            // todo 分页
+            List<Device> deviceList = deviceUserRefService.getDevicesByUid(user.getUid(), deviceListParam.getDeviceName(), deviceListParam.getDeviceType());
+            return PaginationResponse.ok(20L, deviceMapper.toVOList(deviceList));
         }
 
-        return deviceMapper.toDTOList(deviceList);
+        return PaginationResponse.ok(20L,deviceMapper.toVOList(deviceUserRefService.getDevicesByUid(user.getUid())));
     }
 
     @PostMapping("add")

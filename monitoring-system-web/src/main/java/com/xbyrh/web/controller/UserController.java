@@ -1,7 +1,7 @@
 package com.xbyrh.web.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.xbyrh.common.annotations.NoOpenid;
+import com.xbyrh.common.annotations.NoAuth;
 import com.xbyrh.common.context.AuthContext;
 import com.xbyrh.common.utils.HttpUtil;
 import com.xbyrh.repo.entity.User;
@@ -35,7 +35,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @NoOpenid
+    @NoAuth
     @PostMapping("authorize")
     public OpenIdDTO getOpenId(@RequestBody OpenIdParam openIdParam) {
         String url = String.format(openIdProperties.getUrl(), openIdProperties.getAppId(), openIdProperties.getSecret(), openIdParam.getCode());
@@ -49,11 +49,10 @@ public class UserController {
         return userMapper.toDTO(AuthContext.getUser());
     }
 
-    @NoOpenid
+    @NoAuth
     @PostMapping("modify")
     public BaseResponse<String> modifyUserInfo(@RequestBody UserInfoParam userInfoParam){
         User user = userMapper.fromParam(userInfoParam);
-        userService.modifyUserInfo(user);
 
         return BaseResponse.ok("");
     }

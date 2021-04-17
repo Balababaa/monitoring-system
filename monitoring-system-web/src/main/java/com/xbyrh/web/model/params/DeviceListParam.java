@@ -1,6 +1,7 @@
 package com.xbyrh.web.model.params;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * create at 2021/4/16
@@ -9,7 +10,10 @@ import lombok.Data;
  */
 
 @Data
-public class DeviceListParam {
+@EqualsAndHashCode(callSuper = true)
+public class DeviceListParam extends PaginationParam {
+
+    private String deviceName;
 
     private Integer deviceType;
 

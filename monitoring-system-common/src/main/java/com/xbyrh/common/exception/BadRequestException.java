@@ -3,24 +3,22 @@ package com.xbyrh.common.exception;
 import com.xbyrh.common.enums.ResponseEnum;
 
 /**
- * create at 2021/4/14
+ * create at 2021/4/16
  *
  * @author chenxinhui
  */
-public class NotFoundException extends BaseException{
+public class BadRequestException extends BaseException{
 
-    public NotFoundException(String message) {
+    public BadRequestException(String message) {
         super(message);
     }
 
-    public NotFoundException(String message, Throwable cause) {
+    public BadRequestException(String message, Throwable cause) {
         super(message, cause);
     }
 
     @Override
     public ResponseEnum responseEnum() {
-        return ResponseEnum.NOT_FOUND;
+        return ResponseEnum.BAD_REQUEST;
     }
-
-
 }

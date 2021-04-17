@@ -1,5 +1,7 @@
 package com.xbyrh.common.exception;
 
+import com.xbyrh.common.enums.ResponseEnum;
+
 /**
  * create at 2021/4/14
  *
@@ -14,5 +16,7 @@ public abstract class BaseException extends RuntimeException {
     public BaseException(String message, Throwable cause) {
         super(message, cause);
     }
+
+    public abstract ResponseEnum responseEnum();
 
 }

@@ -9,8 +9,9 @@ import com.xbyrh.repo.entity.User;
  */
 public interface IUserService {
 
-    User getUserByOpenid(String openid);
+    User getByUsername(String username);
 
-    User modifyUserInfo(User user);
+    User getByEmail(String email);
 
+    User getById(Long userId);
 }

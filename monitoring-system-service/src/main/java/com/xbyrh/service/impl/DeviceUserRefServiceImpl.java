@@ -3,9 +3,12 @@ package com.xbyrh.service.impl;
 import com.xbyrh.repo.entity.Device;
 import com.xbyrh.repo.entity.DeviceUserRef;
 import com.xbyrh.repo.entity.DeviceUserRefExample;
+import com.xbyrh.repo.mapper.DeviceMapper;
 import com.xbyrh.repo.mapper.DeviceUserRefMapper;
 import com.xbyrh.service.IDeviceService;
+import com.xbyrh.service.IDeviceUserRefService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +22,13 @@ import java.util.stream.Collectors;
  * @author chenxinhui
  */
 @Service
-public class DeviceUserRefServiceImpl implements com.xbyrh.service.IDeviceUserRefService {
+public class DeviceUserRefServiceImpl implements IDeviceUserRefService {
 
     @Autowired
     private DeviceUserRefMapper deviceUserRefMapper;
+
+    @Autowired
+    private DeviceMapper deviceMapper;
 
     @Autowired
     private IDeviceService deviceService;
@@ -43,4 +49,19 @@ public class DeviceUserRefServiceImpl implements com.xbyrh.service.IDeviceUserRe
 
         return deviceService.getDevicesByIds(deviceIdList);
     }
+
+    @Override
+    public List<Device> getDevicesByUid(Long uid, String deviceName, Integer deviceType) {
+        DeviceUserRefExample example = new DeviceUserRefExample();
+        example.createCriteria().andUidEqualTo(uid);
+
+        List<Device> deviceList = deviceMapper.getDevicesByUid(uid, deviceName, deviceType);
+
+        if (CollectionUtils.isEmpty(deviceList)) {
+            return new ArrayList<>();
+        }
+
+        return deviceList;
+    }
+
 }

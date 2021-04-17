@@ -8,7 +8,9 @@ package com.xbyrh.common.enums;
 
 public enum ResponseEnum implements IEnum<Integer,String>{
 
-    SUCCESS(0, "success");
+    SUCCESS(0, "success"),
+    NOT_FOUND(1001, "not_found"),
+    BAD_REQUEST(1002, "bad_request");
 
     private Integer code;
 
