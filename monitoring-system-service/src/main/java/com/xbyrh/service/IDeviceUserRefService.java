@@ -13,4 +13,5 @@ public interface IDeviceUserRefService {
 
     List<Device> getDevicesByUid(Long uid);
 
+    void addRef(Long deviceId, Long uid);
 }

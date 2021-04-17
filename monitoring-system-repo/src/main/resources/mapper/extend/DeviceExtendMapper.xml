@@ -3,7 +3,8 @@
 <mapper namespace="com.xbyrh.repo.mapper.DeviceMapper" >
   <select id="getDevicesByUid" resultMap="BaseResultMap">
     select device.*
-    from device join device_user_ref on device.id = device_user_ref.device_id where device_user_ref.uid = #{uid}
+    from device join device_user_ref on device.id = device_user_ref.device_id
+    where device_user_ref.uid = #{uid} and device.is_delete = 0 and device_user_ref.is_delete = 0
     <if test="deviceName != null">
       and device.device_name like CONCAT('%',#{deviceName},'%')
     </if>
@@ -15,7 +16,8 @@
 
   <select id="countByUserId" resultType="java.lang.Long">
     select count(1)
-    from device join device_user_ref on device.id = device_user_ref.device_id where device_user_ref.uid = #{uid}
+    from device join device_user_ref on device.id = device_user_ref.device_id
+    where device_user_ref.uid = #{uid} and device.is_delete = 0 and device_user_ref.is_delete = 0
     <if test="deviceName != null">
       and device.device_name like CONCAT('%',#{deviceName},'%')
     </if>

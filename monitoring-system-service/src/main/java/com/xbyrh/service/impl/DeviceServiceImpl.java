@@ -9,6 +9,7 @@ import com.xbyrh.repo.mapper.DeviceMapper;
 import com.xbyrh.repo.model.bo.DeviceBO;
 import com.xbyrh.repo.model.params.DeviceAddParam;
 import com.xbyrh.service.IDeviceService;
+import com.xbyrh.service.IDeviceUserRefService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class DeviceServiceImpl implements IDeviceService {
     @Autowired
     private DeviceMapper deviceMapper;
 
+    @Autowired
+    private IDeviceUserRefService deviceUserRefService;
+
     @Override
     public Device getDeviceById(Long id) {
         return deviceMapper.selectByPrimaryKey(id);
@@ -35,7 +39,7 @@ public class DeviceServiceImpl implements IDeviceService {
     @Override
     public List<Device> getDevicesByIds(List<Long> idList) {
         DeviceExample example = new DeviceExample();
-        example.createCriteria().andIdIn(idList);
+        example.createCriteria().andIdIn(idList).andIsDeleteEqualTo(0);
 
         return deviceMapper.selectByExample(example);
     }
@@ -78,8 +82,7 @@ public class DeviceServiceImpl implements IDeviceService {
 
             deviceMapper.insertSelective(device);
 
-
-
+            deviceUserRefService.addRef(device.getId(), user.getUid());
         }
     }
 }

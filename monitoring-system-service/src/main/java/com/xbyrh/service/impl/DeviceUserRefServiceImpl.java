@@ -47,4 +47,13 @@ public class DeviceUserRefServiceImpl implements IDeviceUserRefService {
         return deviceService.getDevicesByIds(deviceIdList);
     }
 
+    @Override
+    public void addRef(Long deviceId, Long uid) {
+        DeviceUserRef deviceUserRef = new DeviceUserRef();
+        deviceUserRef.setDeviceId(deviceId);
+        deviceUserRef.setUid(uid);
+
+        deviceUserRefMapper.insertSelective(deviceUserRef);
+    }
+
 }
