@@ -36,7 +36,6 @@ public class DeviceController {
     @GetMapping("list")
     public PaginationResponse<DeviceVO> deviceList(DeviceListParam deviceListParam) {
         User user = AuthContext.getUser();
-        //todo 分页
 
         if(deviceListParam!=null) {
             // todo 分页
