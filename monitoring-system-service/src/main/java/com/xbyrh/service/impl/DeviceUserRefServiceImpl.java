@@ -1,5 +1,6 @@
 package com.xbyrh.service.impl;
 
+import com.xbyrh.common.exception.NotFoundException;
 import com.xbyrh.repo.entity.Device;
 import com.xbyrh.repo.entity.DeviceUserRef;
 import com.xbyrh.repo.entity.DeviceUserRefExample;
@@ -32,9 +33,8 @@ public class DeviceUserRefServiceImpl implements IDeviceUserRefService {
 
     @Override
     public List<Device> getDevicesByUid(Long uid) {
-
         DeviceUserRefExample example = new DeviceUserRefExample();
-        example.createCriteria().andUidEqualTo(uid);
+        example.createCriteria().andUidEqualTo(uid).andIsDeleteEqualTo(0);
 
         List<DeviceUserRef> deviceUserRefList = deviceUserRefMapper.selectByExample(example);
 
@@ -54,6 +54,34 @@ public class DeviceUserRefServiceImpl implements IDeviceUserRefService {
         deviceUserRef.setUid(uid);
 
         deviceUserRefMapper.insertSelective(deviceUserRef);
+    }
+
+    @Override
+    public DeviceUserRef getDeviceByDeviceIdAndUid(Long deviceId, Long uid) {
+        DeviceUserRefExample example = new DeviceUserRefExample();
+        example.createCriteria().andDeviceIdEqualTo(deviceId).andUidEqualTo(uid).andIsDeleteEqualTo(0);
+
+        List<DeviceUserRef> deviceUserRefList = deviceUserRefMapper.selectByExample(example);
+
+        if (CollectionUtils.isEmpty(deviceUserRefList)) {
+            throw new NotFoundException("设备不存在！");
+        }
+
+        return deviceUserRefList.get(0);
+    }
+
+    @Override
+    public void update(DeviceUserRef deviceUserRef) {
+
+    }
+
+    @Override
+    public void updateByPrimaryKey(DeviceUserRef deviceUserRef) {
+        if (deviceUserRef.getId() == null) {
+            throw new IllegalArgumentException("设备不存在！");
+        }
+
+        deviceUserRefMapper.updateByPrimaryKey(deviceUserRef);
     }
 
 }

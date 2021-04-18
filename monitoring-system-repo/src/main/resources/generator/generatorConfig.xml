@@ -44,7 +44,7 @@
                enableDeleteByExample="false"
                enableSelectByExample="true"
                selectByExampleQueryId="false" >
-            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
 
 <!--        <table tableName="video_log"-->

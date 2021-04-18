@@ -6,6 +6,7 @@ import com.xbyrh.repo.entity.User;
 import com.xbyrh.repo.model.bo.DeviceBO;
 import com.xbyrh.repo.model.mapper.DeviceMapper;
 import com.xbyrh.repo.model.params.DeviceAddParam;
+import com.xbyrh.repo.model.params.DeviceDeleteParam;
 import com.xbyrh.repo.model.vo.DeviceVO;
 import com.xbyrh.service.IDeviceService;
 import com.xbyrh.service.IDeviceUserRefService;
@@ -57,4 +58,9 @@ public class DeviceController {
         return BaseResponse.ok();
     }
 
+    @PostMapping("delete")
+    public BaseResponse<String> delete(@RequestBody DeviceDeleteParam deviceDeleteParam) {
+        deviceService.delete(deviceDeleteParam.getId());
+        return BaseResponse.ok();
+    }
 }

@@ -1,10 +1,8 @@
 package com.xbyrh.service.impl;
 
 import com.xbyrh.common.context.AuthContext;
-import com.xbyrh.repo.entity.Device;
-import com.xbyrh.repo.entity.DeviceExample;
-import com.xbyrh.repo.entity.DeviceUserRefExample;
-import com.xbyrh.repo.entity.User;
+import com.xbyrh.common.exception.NotFoundException;
+import com.xbyrh.repo.entity.*;
 import com.xbyrh.repo.mapper.DeviceMapper;
 import com.xbyrh.repo.model.bo.DeviceBO;
 import com.xbyrh.repo.model.params.DeviceAddParam;
@@ -13,6 +11,7 @@ import com.xbyrh.service.IDeviceUserRefService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,5 +83,25 @@ public class DeviceServiceImpl implements IDeviceService {
 
             deviceUserRefService.addRef(device.getId(), user.getUid());
         }
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        Device device = deviceMapper.selectByPrimaryKey(id);
+        if (device == null) {
+            throw new NotFoundException("设备不存在！");
+        }
+
+        device.setIsDelete(1);
+        deviceMapper.updateByPrimaryKey(device);
+
+        User user = AuthContext.getUser();
+        Long uid = user.getUid();
+
+        DeviceUserRef deviceUserRef = deviceUserRefService.getDeviceByDeviceIdAndUid(id, uid);
+
+        deviceUserRef.setIsDelete(1);
+        deviceUserRefService.updateByPrimaryKey(deviceUserRef);
     }
 }

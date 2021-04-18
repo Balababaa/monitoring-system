@@ -3,7 +3,6 @@ package com.xbyrh.common.utils;
 
 import lombok.Data;
 import org.apache.tomcat.util.codec.binary.Base64;
-import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

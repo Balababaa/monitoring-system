@@ -23,4 +23,6 @@ public interface IDeviceService {
     Long countByUserId(Long uid, String deviceName, Integer deviceType);
 
     void save(DeviceBO deviceBO);
+
+    void delete(Long id);
 }
