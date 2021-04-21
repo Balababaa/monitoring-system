@@ -18,7 +18,7 @@ public interface IDeviceService {
 
     List<Device> getDevicesByIds(List<Long> idList);
 
-    List<Device> getDevicesByUid(Long uid, String deviceName, Integer deviceType, Long page, Long limit);
+    List<Device> getDevicesByUid(Long uid, String deviceName, Integer deviceType, Integer page, Integer limit);
 
     Long countByUserId(Long uid, String deviceName, Integer deviceType);
 

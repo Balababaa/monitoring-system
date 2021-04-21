@@ -9,7 +9,6 @@ import com.xbyrh.repo.model.params.DeviceAddParam;
 import com.xbyrh.repo.model.params.DeviceDeleteParam;
 import com.xbyrh.repo.model.vo.DeviceVO;
 import com.xbyrh.service.IDeviceService;
-import com.xbyrh.service.IDeviceUserRefService;
 import com.xbyrh.web.model.params.DeviceListParam;
 import com.xbyrh.web.model.support.BaseResponse;
 import com.xbyrh.web.model.support.PaginationResponse;
@@ -27,9 +26,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/device")
 public class DeviceController {
-
-    @Autowired
-    private IDeviceUserRefService deviceUserRefService;
 
     @Autowired
     private IDeviceService deviceService;

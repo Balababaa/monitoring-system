@@ -11,7 +11,7 @@ import java.util.List;
  * @author chenxinhui
  */
 public interface IVideoFileService {
-    List<VideoFileBO> getVideoFileListByDeviceId(Long deviceId, String startTime, String endTime, Long page, Long limit);
+    List<VideoFileBO> getVideoFileListByDeviceId(Long deviceId, String startTime, String endTime, Integer page, Integer limit);
 
     Long countVideoFileByDeviceId(Long deviceId, String startTime, String endTime);
 }

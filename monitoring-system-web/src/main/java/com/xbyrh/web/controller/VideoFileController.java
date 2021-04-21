@@ -55,40 +55,6 @@ public class VideoFileController {
         return PaginationResponse.ok(total, videoFileConverter.toVOList(videoFileBOList));
     }
 
-//    @GetMapping("upload")
-//    public PaginationResponse<VideoFileVO> list(VideoFileListParam videoFileListParam) {
-//        List<VideoFileBO> videoFileBOList = videoFileService.getVideoFileListByDeviceId(
-//                videoFileListParam.getDeviceId(),
-//                StringUtils.isBlank(videoFileListParam.getStartTime()) ? null : videoFileListParam.getStartTime(),
-//                StringUtils.isBlank(videoFileListParam.getEndTime()) ? null : videoFileListParam.getEndTime(),
-//                videoFileListParam.getPage(), videoFileListParam.getLimit());
-//
-//        Long total = videoFileService.countVideoFileByDeviceId(
-//                videoFileListParam.getDeviceId(),
-//                StringUtils.isBlank(videoFileListParam.getStartTime()) ? null : videoFileListParam.getStartTime(),
-//                StringUtils.isBlank(videoFileListParam.getEndTime()) ? null : videoFileListParam.getEndTime()
-//        );
-//
-//        return PaginationResponse.ok(total, videoFileConverter.toVOList(videoFileBOList));
-//    }
-
-//    @GetMapping("upload")
-//    public PaginationResponse<VideoFileVO> list(VideoFileListParam videoFileListParam) {
-//        List<VideoFileBO> videoFileBOList = videoFileService.getVideoFileListByDeviceId(
-//                videoFileListParam.getDeviceId(),
-//                StringUtils.isBlank(videoFileListParam.getStartTime()) ? null : videoFileListParam.getStartTime(),
-//                StringUtils.isBlank(videoFileListParam.getEndTime()) ? null : videoFileListParam.getEndTime(),
-//                videoFileListParam.getPage(), videoFileListParam.getLimit());
-//
-//        Long total = videoFileService.countVideoFileByDeviceId(
-//                videoFileListParam.getDeviceId(),
-//                StringUtils.isBlank(videoFileListParam.getStartTime()) ? null : videoFileListParam.getStartTime(),
-//                StringUtils.isBlank(videoFileListParam.getEndTime()) ? null : videoFileListParam.getEndTime()
-//        );
-//
-//        return PaginationResponse.ok(total, videoFileConverter.toVOList(videoFileBOList));
-//    }
-
     @NoAuth
     @GetMapping("/play/{filename:.+}")
     public ResponseEntity<Resource> play(@PathVariable("filename") String filename, HttpServletResponse response) {

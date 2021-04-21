@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class PaginationParam {
 
-    private Long page = 1L;
+    private Integer page = 1;
 
-    private Long limit = 10L;
+    private Integer limit = 10;
 
 }

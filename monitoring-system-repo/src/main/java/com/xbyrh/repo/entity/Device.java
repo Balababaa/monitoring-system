@@ -11,6 +11,8 @@ public class Device {
 
     private String httpFlvUrl;
 
+    private Long uid;
+
     private Long modifier;
 
     private Long creator;
@@ -51,6 +53,14 @@ public class Device {
 
     public void setHttpFlvUrl(String httpFlvUrl) {
         this.httpFlvUrl = httpFlvUrl == null ? null : httpFlvUrl.trim();
+    }
+
+    public Long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) {
+        this.uid = uid;
     }
 
     public Long getModifier() {

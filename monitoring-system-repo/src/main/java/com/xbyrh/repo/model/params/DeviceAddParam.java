@@ -19,4 +19,6 @@ public class DeviceAddParam {
 
     private String httpFlvUrl;
 
+    private Long uid;
+
 }

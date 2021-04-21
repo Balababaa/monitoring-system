@@ -18,6 +18,8 @@ public class DeviceVO {
 
     private String httpFlvUrl;
 
+    private Integer uid;
+
     private Integer creator;
 
     private String createTime;

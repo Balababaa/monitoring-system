@@ -156,6 +156,12 @@
       </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.xbyrh.repo.entity.VideoFileExample" resultType="java.lang.Integer" >
+    select count(*) from video_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
   <update id="updateByPrimaryKeySelective" parameterType="com.xbyrh.repo.entity.VideoFile" >
     update video_file
     <set >

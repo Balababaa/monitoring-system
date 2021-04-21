@@ -15,4 +15,6 @@ public class DeviceBO {
 
     private String httpFlvUrl;
 
+    private Long uid;
+
 }

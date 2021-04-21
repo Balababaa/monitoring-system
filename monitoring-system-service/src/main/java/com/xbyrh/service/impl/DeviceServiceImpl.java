@@ -5,10 +5,9 @@ import com.xbyrh.common.exception.NotFoundException;
 import com.xbyrh.repo.entity.*;
 import com.xbyrh.repo.mapper.DeviceMapper;
 import com.xbyrh.repo.model.bo.DeviceBO;
-import com.xbyrh.repo.model.params.DeviceAddParam;
 import com.xbyrh.service.IDeviceService;
-import com.xbyrh.service.IDeviceUserRefService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +26,6 @@ public class DeviceServiceImpl implements IDeviceService {
     @Autowired
     private DeviceMapper deviceMapper;
 
-    @Autowired
-    private IDeviceUserRefService deviceUserRefService;
-
     @Override
     public Device getDeviceById(Long id) {
         return deviceMapper.selectByPrimaryKey(id);
@@ -44,8 +40,25 @@ public class DeviceServiceImpl implements IDeviceService {
     }
 
     @Override
-    public List<Device> getDevicesByUid(Long uid, String deviceName, Integer deviceType, Long page, Long limit) {
-        List<Device> deviceList = deviceMapper.getDevicesByUid(uid, deviceName, deviceType, (page - 1) * limit, limit);
+    public List<Device> getDevicesByUid(Long uid, String deviceName, Integer deviceType, Integer page, Integer limit) {
+        DeviceExample example = new DeviceExample();
+
+        DeviceExample.Criteria criteria = example.createCriteria();
+
+        criteria.andUidEqualTo(uid);
+
+        if (StringUtils.isNotBlank(deviceName)) {
+            criteria.andDeviceNameLike(deviceName);
+        }
+
+        if (deviceType != null) {
+            criteria.andDeviceTypeEqualTo(deviceType);
+        }
+
+        example.setLimit(limit);
+        example.setOffset((page - 1) * limit);
+
+        List<Device> deviceList = deviceMapper.selectByExample(example);
 
         if (CollectionUtils.isEmpty(deviceList)) {
             return new ArrayList<>();
@@ -56,33 +69,58 @@ public class DeviceServiceImpl implements IDeviceService {
 
     @Override
     public Long countByUserId(Long uid, String deviceName, Integer deviceType) {
-        return deviceMapper.countByUserId(uid, deviceName, deviceType);
+        DeviceExample example = new DeviceExample();
+
+        DeviceExample.Criteria criteria = example.createCriteria();
+
+        criteria.andUidEqualTo(uid);
+
+        if (StringUtils.isNotBlank(deviceName)) {
+            criteria.andDeviceNameLike(deviceName);
+        }
+
+        if (deviceType != null) {
+            criteria.andDeviceTypeEqualTo(deviceType);
+        }
+
+        return (long) deviceMapper.countByExample(example);
     }
 
     @Override
     public void save(DeviceBO deviceBO) {
-        User user = AuthContext.getUser();
         if (deviceBO.getId() != null) {
-            Device device = getDeviceById(deviceBO.getId());
-            device.setDeviceName(deviceBO.getDeviceName());
-            device.setDeviceType(deviceBO.getDeviceType());
-            device.setHttpFlvUrl(deviceBO.getHttpFlvUrl());
-            device.setModifier(user.getUid());
-
-            deviceMapper.updateByPrimaryKey(device);
+            update(deviceBO);
         }else{
-            Device device = new Device();
-
-            device.setDeviceName(deviceBO.getDeviceName());
-            device.setDeviceType(deviceBO.getDeviceType());
-            device.setHttpFlvUrl(deviceBO.getHttpFlvUrl());
-            device.setModifier(user.getUid());
-            device.setCreator(user.getUid());
-
-            deviceMapper.insertSelective(device);
-
-            deviceUserRefService.addRef(device.getId(), user.getUid());
+            add(deviceBO);
         }
+    }
+
+    private void add(DeviceBO deviceBO){
+        User user = AuthContext.getUser();
+
+        Device device = new Device();
+
+        device.setDeviceName(deviceBO.getDeviceName());
+        device.setDeviceType(deviceBO.getDeviceType());
+        device.setHttpFlvUrl(deviceBO.getHttpFlvUrl());
+        device.setUid(deviceBO.getUid());
+        device.setModifier(user.getUid());
+        device.setCreator(user.getUid());
+
+        deviceMapper.insertSelective(device);
+    }
+
+    private void update(DeviceBO deviceBO){
+        User user = AuthContext.getUser();
+
+        Device device = getDeviceById(deviceBO.getId());
+        device.setDeviceName(deviceBO.getDeviceName());
+        device.setDeviceType(deviceBO.getDeviceType());
+        device.setHttpFlvUrl(deviceBO.getHttpFlvUrl());
+        device.setUid(deviceBO.getUid());
+        device.setModifier(user.getUid());
+
+        deviceMapper.updateByPrimaryKey(device);
     }
 
     @Override
@@ -95,13 +133,5 @@ public class DeviceServiceImpl implements IDeviceService {
 
         device.setIsDelete(1);
         deviceMapper.updateByPrimaryKey(device);
-
-        User user = AuthContext.getUser();
-        Long uid = user.getUid();
-
-        DeviceUserRef deviceUserRef = deviceUserRefService.getDeviceByDeviceIdAndUid(id, uid);
-
-        deviceUserRef.setIsDelete(1);
-        deviceUserRefService.updateByPrimaryKey(deviceUserRef);
     }
 }

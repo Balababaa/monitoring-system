@@ -38,23 +38,23 @@
 <!--               enableSelectByExample="true"-->
 <!--               selectByExampleQueryId="false" />-->
 
-        <table tableName="device"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="true"
-               selectByExampleQueryId="false" >
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-
-<!--        <table tableName="video_file"-->
-<!--               enableCountByExample="false"-->
+<!--        <table tableName="device"-->
+<!--               enableCountByExample="true"-->
 <!--               enableUpdateByExample="false"-->
 <!--               enableDeleteByExample="false"-->
 <!--               enableSelectByExample="true"-->
 <!--               selectByExampleQueryId="false" >-->
-<!--                        <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->
+
+        <table tableName="video_file"
+               enableCountByExample="true"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="true"
+               selectByExampleQueryId="false" >
+                        <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 
 <!--        <table tableName="device_user_ref"-->
 <!--               enableCountByExample="false"-->
