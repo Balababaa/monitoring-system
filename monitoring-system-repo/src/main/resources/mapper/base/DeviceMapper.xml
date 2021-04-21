@@ -6,6 +6,7 @@
     <result column="device_name" property="deviceName" jdbcType="VARCHAR" />
     <result column="device_type" property="deviceType" jdbcType="INTEGER" />
     <result column="http_flv_url" property="httpFlvUrl" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
     <result column="modifier" property="modifier" jdbcType="BIGINT" />
     <result column="creator" property="creator" jdbcType="BIGINT" />
     <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
@@ -42,7 +43,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, device_name, device_type, http_flv_url, modifier, creator, is_delete, create_time, 
+    id, device_name, device_type, http_flv_url, uid, modifier, creator, is_delete, create_time, 
     update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xbyrh.repo.entity.DeviceExample" >
@@ -83,11 +84,13 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into device (device_name, device_type, http_flv_url, 
-      modifier, creator, is_delete, 
-      create_time, update_time)
+      uid, modifier, creator, 
+      is_delete, create_time, update_time
+      )
     values (#{deviceName,jdbcType=VARCHAR}, #{deviceType,jdbcType=INTEGER}, #{httpFlvUrl,jdbcType=VARCHAR}, 
-      #{modifier,jdbcType=BIGINT}, #{creator,jdbcType=BIGINT}, #{isDelete,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{uid,jdbcType=BIGINT}, #{modifier,jdbcType=BIGINT}, #{creator,jdbcType=BIGINT}, 
+      #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xbyrh.repo.entity.Device" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -103,6 +106,9 @@
       </if>
       <if test="httpFlvUrl != null" >
         http_flv_url,
+      </if>
+      <if test="uid != null" >
+        uid,
       </if>
       <if test="modifier != null" >
         modifier,
@@ -130,6 +136,9 @@
       <if test="httpFlvUrl != null" >
         #{httpFlvUrl,jdbcType=VARCHAR},
       </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
       <if test="modifier != null" >
         #{modifier,jdbcType=BIGINT},
       </if>
@@ -147,6 +156,12 @@
       </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.xbyrh.repo.entity.DeviceExample" resultType="java.lang.Integer" >
+    select count(*) from device
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
   <update id="updateByPrimaryKeySelective" parameterType="com.xbyrh.repo.entity.Device" >
     update device
     <set >
@@ -158,6 +173,9 @@
       </if>
       <if test="httpFlvUrl != null" >
         http_flv_url = #{httpFlvUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
       </if>
       <if test="modifier != null" >
         modifier = #{modifier,jdbcType=BIGINT},
@@ -182,6 +200,7 @@
     set device_name = #{deviceName,jdbcType=VARCHAR},
       device_type = #{deviceType,jdbcType=INTEGER},
       http_flv_url = #{httpFlvUrl,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=BIGINT},
       modifier = #{modifier,jdbcType=BIGINT},
       creator = #{creator,jdbcType=BIGINT},
       is_delete = #{isDelete,jdbcType=INTEGER},
