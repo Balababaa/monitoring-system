@@ -47,12 +47,14 @@
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
 
-<!--        <table tableName="video_log"-->
+<!--        <table tableName="video_file"-->
 <!--               enableCountByExample="false"-->
 <!--               enableUpdateByExample="false"-->
 <!--               enableDeleteByExample="false"-->
 <!--               enableSelectByExample="true"-->
-<!--               selectByExampleQueryId="false" />-->
+<!--               selectByExampleQueryId="false" >-->
+<!--                        <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
 
 <!--        <table tableName="device_user_ref"-->
 <!--               enableCountByExample="false"-->

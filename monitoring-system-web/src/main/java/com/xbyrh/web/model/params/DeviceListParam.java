@@ -1,5 +1,6 @@
 package com.xbyrh.web.model.params;
 
+import com.xbyrh.repo.model.params.PaginationParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
