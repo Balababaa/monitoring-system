@@ -1,4 +1,4 @@
-package com.xbyrh.web.model.support;
+package com.xbyrh.repo.model.support;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.xbyrh.web.model.support;
+package com.xbyrh.repo.model.support;
 
 import com.xbyrh.common.enums.ResponseEnum;
 import lombok.Data;

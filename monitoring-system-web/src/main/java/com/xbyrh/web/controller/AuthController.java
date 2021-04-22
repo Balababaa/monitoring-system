@@ -8,7 +8,7 @@ import com.xbyrh.service.IAuthService;
 import com.xbyrh.repo.model.bo.AuthTokenBO;
 import com.xbyrh.web.model.params.LoginParam;
 import com.xbyrh.repo.model.vo.AuthTokenVO;
-import com.xbyrh.web.model.support.BaseResponse;
+import com.xbyrh.repo.model.support.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

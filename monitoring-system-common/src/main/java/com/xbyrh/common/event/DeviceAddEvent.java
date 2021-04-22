@@ -8,7 +8,23 @@ import org.springframework.context.ApplicationEvent;
  * @author chenxinhui
  */
 public class DeviceAddEvent extends ApplicationEvent {
-    public DeviceAddEvent(Object source) {
-        super(source);
+
+    private Long deviceId;
+
+    private String httpFlvUrl;
+
+    public DeviceAddEvent(Long deviceId, String httpFlvUrl) {
+        super(deviceId);
+        this.deviceId = deviceId;
+        this.httpFlvUrl = httpFlvUrl;
     }
+
+    public Long getDeviceId() {
+        return deviceId;
+    }
+
+    public String getHttpFlvUrl() {
+        return httpFlvUrl;
+    }
+
 }

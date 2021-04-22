@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
+//@Slf4j
 public class HttpUtil {
 
     private static final OkHttpClient CLIENT = new OkHttpClient();
@@ -33,10 +33,10 @@ public class HttpUtil {
             Request request = new Request.Builder().url(url).build();
             Response response = CLIENT.newCall(request).execute();
             result = response.body().string();
-            log.info("Get请求返回：{}", result);
+//            log.info("Get请求返回：{}", result);
             return result;
         } catch (Exception e) {
-            log.error("OkHttp[Get]请求异常", e);
+//            log.error("OkHttp[Get]请求异常", e);
             return result;
         }
     }
@@ -57,7 +57,7 @@ public class HttpUtil {
             OkHttpClient okHttpClient = new OkHttpClient();
             FormBody.Builder formBodyBuilder = new FormBody.Builder();
             //添加参数
-            log.info("params：{}", JSON.toJSONString(params));
+//            log.info("params：{}", JSON.toJSONString(params));
             for (Map.Entry<String, String> map : params.entrySet()) {
                 String key = map.getKey();
                 String value;
@@ -72,10 +72,10 @@ public class HttpUtil {
             Request request = new Request.Builder().url(url).post(formBody).build();
             Response response = okHttpClient.newCall(request).execute();
             result = response.body().string();
-            log.info("Post请求返回：{}", result);
+//            log.info("Post请求返回：{}", result);
             return result;
         } catch (Exception e) {
-            log.error("OkHttp[Post]请求异常", e);
+//            log.error("OkHttp[Post]请求异常", e);
             return result;
         }
     }
@@ -105,10 +105,10 @@ public class HttpUtil {
             Request request = new Request.Builder().url(url).post(requestBody).build();
             Response response = okHttpClient.newCall(request).execute();
             result = response.body().string();
-            log.info("Upload请求返回：{}", result);
+//            log.info("Upload请求返回：{}", result);
             return result;
         } catch (Exception e) {
-            log.error("OkHttp[Upload]请求异常", e);
+//            log.error("OkHttp[Upload]请求异常", e);
             return result;
         }
     }
@@ -135,10 +135,10 @@ public class HttpUtil {
             sink.flush();
             sink.close();
             result = savePath;
-            log.info("Download请求返回：{}", result);
+//            log.info("Download请求返回：{}", result);
             return result;
         } catch (Exception e) {
-            log.error("OkHttp[Download]请求异常", e);
+//            log.error("OkHttp[Download]请求异常", e);
             return result;
         }
     }

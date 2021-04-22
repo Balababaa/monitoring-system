@@ -14,11 +14,13 @@ public class DeviceVO {
 
     private String deviceName;
 
-    private Integer deviceType;
+    private String deviceType;
 
     private String httpFlvUrl;
 
     private Integer uid;
+
+    private Boolean isDelete;
 
     private Integer creator;
 

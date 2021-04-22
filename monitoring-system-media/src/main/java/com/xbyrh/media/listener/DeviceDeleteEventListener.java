@@ -1,7 +1,7 @@
 package com.xbyrh.media.listener;
 
-import com.xbyrh.common.event.DeviceAddEvent;
 import com.xbyrh.common.event.DeviceDeleteEvent;
+import com.xbyrh.media.context.VideoStreamGrabTaskContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +19,8 @@ public class DeviceDeleteEventListener implements ApplicationListener<DeviceDele
      */
     @Override
     public void onApplicationEvent(DeviceDeleteEvent deviceDeleteEvent) {
+        Long deviceId = deviceDeleteEvent.getDeviceId();
 
+        VideoStreamGrabTaskContext.stop(deviceId);
     }
 }

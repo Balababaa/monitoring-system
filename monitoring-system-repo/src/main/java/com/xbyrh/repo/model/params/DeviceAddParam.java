@@ -21,4 +21,5 @@ public class DeviceAddParam {
 
     private Long uid;
 
+    private Integer isDelete;
 }

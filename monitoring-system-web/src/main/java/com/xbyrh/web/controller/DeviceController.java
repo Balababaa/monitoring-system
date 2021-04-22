@@ -1,6 +1,6 @@
 package com.xbyrh.web.controller;
 
-import com.xbyrh.common.context.AuthContext;
+import com.xbyrh.service.context.AuthContext;
 import com.xbyrh.repo.entity.Device;
 import com.xbyrh.repo.entity.User;
 import com.xbyrh.repo.model.bo.DeviceBO;
@@ -10,8 +10,8 @@ import com.xbyrh.repo.model.params.DeviceDeleteParam;
 import com.xbyrh.repo.model.vo.DeviceVO;
 import com.xbyrh.service.IDeviceService;
 import com.xbyrh.web.model.params.DeviceListParam;
-import com.xbyrh.web.model.support.BaseResponse;
-import com.xbyrh.web.model.support.PaginationResponse;
+import com.xbyrh.repo.model.support.BaseResponse;
+import com.xbyrh.repo.model.support.PaginationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +57,13 @@ public class DeviceController {
     @PostMapping("delete")
     public BaseResponse<String> delete(@RequestBody DeviceDeleteParam deviceDeleteParam) {
         deviceService.delete(deviceDeleteParam.getId());
+        return BaseResponse.ok();
+    }
+
+
+    @PostMapping("delete/status")
+    public BaseResponse<String> updateDeleteStatus(@RequestBody DeviceDeleteParam deviceDeleteParam) {
+        deviceService.updateDeleteStatus(deviceDeleteParam.getId());
         return BaseResponse.ok();
     }
 }

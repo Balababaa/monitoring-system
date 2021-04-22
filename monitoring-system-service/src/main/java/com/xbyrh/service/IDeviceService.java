@@ -25,4 +25,8 @@ public interface IDeviceService {
     void save(DeviceBO deviceBO);
 
     void delete(Long id);
+
+    List<Device> getAll();
+
+    void updateDeleteStatus(Long id);
 }

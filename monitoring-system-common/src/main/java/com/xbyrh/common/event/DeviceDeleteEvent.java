@@ -8,7 +8,16 @@ import org.springframework.context.ApplicationEvent;
  * @author chenxinhui
  */
 public class DeviceDeleteEvent extends ApplicationEvent {
-    public DeviceDeleteEvent(Object source) {
-        super(source);
+
+    private Long deviceId;
+
+    public DeviceDeleteEvent(Long deviceId) {
+        super(deviceId);
+        this.deviceId = deviceId;
     }
+
+    public Long getDeviceId() {
+        return deviceId;
+    }
+
 }

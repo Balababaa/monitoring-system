@@ -73,4 +73,9 @@ public class VideoFileServiceImpl implements IVideoFileService {
 
         return (long) videoFileMapper.countByExample(example);
     }
+
+    @Override
+    public void addVideoFile(VideoFile videoFile) {
+        videoFileMapper.insertSelective(videoFile);
+    }
 }

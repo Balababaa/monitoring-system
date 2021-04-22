@@ -1,4 +1,4 @@
-package com.xbyrh.web.core;
+package com.xbyrh.media.core;
 
 import com.xbyrh.common.enums.ResponseEnum;
 import com.xbyrh.common.exception.BaseException;

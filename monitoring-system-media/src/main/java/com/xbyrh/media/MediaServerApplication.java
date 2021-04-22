@@ -1,20 +1,20 @@
 package com.xbyrh.media;
 
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
  * create at 2021/4/21
  *
  * @author chenxinhui
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.xbyrh")
+@MapperScan("com.xbyrh.repo.mapper")
 public class MediaServerApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(MediaServerApplication.class)
-                .web(false)
-                .run(args);
+        SpringApplication.run(MediaServerApplication.class, args);
     }
 
 }

@@ -14,9 +14,7 @@ public class DateUtil {
 
 
     public static String convertToString(Date date) {
-
         return " ";
-
     }
 
     public static Date stringToDate(String date){
@@ -39,9 +37,27 @@ public class DateUtil {
         }
     }
 
+    public static String dateToString(Date date,String format){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+
+        try {
+            return simpleDateFormat.format(date);
+        }catch (Exception e){
+            throw new IllegalArgumentException("日期格式不正确");
+        }
+    }
+
+//    public static String next10Minutes(){
+//
+//        int i = Calendar.getInstance().get(Calendar.MINUTE);
+//
+//    }
+
+
     public static void main(String[] args) {
         System.out.println(stringToDate("2020-12-12 01:01:01"));
         System.out.println(dateToString(new Date()));
+        System.out.println(dateToString(new Date(),"yyyy-MM-dd_HH:mm:ss"));
     }
 
 }

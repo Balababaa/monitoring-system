@@ -2,7 +2,7 @@ package com.xbyrh.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.xbyrh.common.annotations.NoAuth;
-import com.xbyrh.common.context.AuthContext;
+import com.xbyrh.service.context.AuthContext;
 import com.xbyrh.common.utils.HttpUtil;
 import com.xbyrh.repo.entity.User;
 import com.xbyrh.service.IUserService;
@@ -11,7 +11,7 @@ import com.xbyrh.web.model.dto.UserDTO;
 import com.xbyrh.web.model.mapper.UserMapper;
 import com.xbyrh.web.model.params.OpenIdParam;
 import com.xbyrh.web.model.params.UserInfoParam;
-import com.xbyrh.web.model.support.BaseResponse;
+import com.xbyrh.repo.model.support.BaseResponse;
 import com.xbyrh.web.properties.OpenIdProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

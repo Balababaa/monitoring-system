@@ -2,7 +2,7 @@ package com.xbyrh.common.utils;
 
 
 import lombok.Data;
-import org.apache.tomcat.util.codec.binary.Base64;
+import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -134,7 +134,7 @@ public class VerifyUtil {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ImageIO.write(image, "png", outputStream);
-        Base64 base64 = new Base64();
+        BASE64Encoder base64 = new BASE64Encoder();
         codeImage.base64 = new String(base64.encode(outputStream.toByteArray()));
 
         return codeImage;

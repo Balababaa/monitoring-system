@@ -12,7 +12,6 @@ import java.util.UUID;
  * @author johnniang
  * @date 2017-12-22
  */
-@Slf4j
 public class HaloUtils {
 
     /**

@@ -1,4 +1,4 @@
-package com.xbyrh.web.core;
+package com.xbyrh.media.core;
 
 import com.xbyrh.repo.model.support.BaseResponse;
 import org.springframework.core.MethodParameter;
