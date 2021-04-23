@@ -18,7 +18,13 @@ public class VideoStreamGrabTaskContext {
                                                                     0L, TimeUnit.MILLISECONDS,
                                                                     new LinkedBlockingQueue<Runnable>());
 
+
+
     private static HashMap<Long, VideoStreamGrabTask> context = new HashMap<>();
+
+    public static void execute(VideoStreamGrabTask videoStreamGrabTask){
+        executorService.execute(videoStreamGrabTask);
+    }
 
     public static void add(Long id,VideoStreamGrabTask videoStreamGrabTask){
         context.put(id, videoStreamGrabTask);

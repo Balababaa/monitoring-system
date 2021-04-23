@@ -116,7 +116,7 @@ public class DeviceServiceImpl implements IDeviceService, ApplicationContextAwar
 
         deviceMapper.insertSelective(device);
 
-        applicationContext.publishEvent(new DeviceAddEvent(device.getId(), device.getHttpFlvUrl()));
+//        applicationContext.publishEvent(new DeviceAddEvent(device.getId(), device.getHttpFlvUrl()));
 
     }
 
@@ -143,8 +143,6 @@ public class DeviceServiceImpl implements IDeviceService, ApplicationContextAwar
 
         device.setIsDelete(1);
         deviceMapper.updateByPrimaryKey(device);
-
-        applicationContext.publishEvent(new DeviceDeleteEvent(id));
     }
 
     @Override

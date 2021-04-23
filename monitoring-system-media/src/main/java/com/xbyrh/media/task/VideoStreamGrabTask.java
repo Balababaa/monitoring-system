@@ -3,7 +3,6 @@ package com.xbyrh.media.task;
 import com.xbyrh.common.event.VideoFileAddEvent;
 import com.xbyrh.common.utils.DateUtil;
 import com.xbyrh.common.utils.SpringUtil;
-import com.xbyrh.media.context.VideoStreamGrabTaskContext;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.ffmpeg.global.avcodec;
 import org.bytedeco.ffmpeg.global.avutil;
@@ -57,8 +56,8 @@ public class VideoStreamGrabTask implements Runnable {
 
         Date startTime = new Date();
         String startTimeString = DateUtil.dateToString(startTime, "yyyy-MM-dd-HH-mm-ss");
-
         String fileName = startTimeString + ".mp4";
+        log.info("开始录制，文件名: {}", fileName);
 
         FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(fileName, 1280, 720);
         recorder.setFrameRate(15D);
@@ -74,17 +73,16 @@ public class VideoStreamGrabTask implements Runnable {
             Calendar instance = null;
             while (!stop.get() && (frame = grabber.grabFrame()) != null) {
                 recorder.record(frame);
-                // 每十分钟结束一次录制
+                // 每一分钟结束一次录制
                 instance = Calendar.getInstance();
-                if (instance.get(Calendar.SECOND) == 0) {
-                    VideoStreamGrabTaskContext.add(deviceId, new VideoStreamGrabTask(deviceId, httpFlvUrl, grabber));
-                    log.info("一次录制成功，{}", startTimeString);
+                if (instance.getTime().getTime() - startTime.getTime() >= 1000 * 60) {
+                    log.info("一次录制成功，{} {}", deviceId, startTimeString);
                     break;
                 }
             }
             recorder.stop();
             SpringUtil.getApplicationContext()
-                      .publishEvent(new VideoFileAddEvent(deviceId, fileName, startTime, instance.getTime()));
+                    .publishEvent(new VideoFileAddEvent(deviceId, fileName, startTime, instance.getTime()));
         } catch (Exception e) {
             log.error("视频保存失败，忽略，开始时间 {}", startTimeString);
             e.printStackTrace();
