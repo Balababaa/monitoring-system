@@ -1,6 +1,7 @@
 package com.xbyrh.service;
 
 import com.xbyrh.repo.entity.User;
+import com.xbyrh.repo.model.bo.UserUpdateBO;
 
 /**
  * create at 2021/4/14
@@ -14,4 +15,7 @@ public interface IUserService {
     User getByEmail(String email);
 
     User getById(Long userId);
+
+    User update(UserUpdateBO userUpdateBO);
+
 }

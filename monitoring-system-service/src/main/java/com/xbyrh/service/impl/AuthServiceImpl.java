@@ -51,6 +51,7 @@ public class AuthServiceImpl implements IAuthService {
         token.setAccessToken(HaloUtils.randomUUIDWithoutDash());
         token.setExpiredIn(accessTokenProperties.getExpireTime());
         token.setRefreshToken(HaloUtils.randomUUIDWithoutDash());
+        token.setUser(user);
 
         // Cache those tokens, just for clearing
 //        cacheStore.putAny(SecurityUtils.buildAccessTokenKey(user), token.getAccessToken(),

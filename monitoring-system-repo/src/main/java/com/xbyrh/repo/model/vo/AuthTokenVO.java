@@ -1,5 +1,6 @@
 package com.xbyrh.repo.model.vo;
 
+import com.xbyrh.repo.entity.User;
 import lombok.Data;
 
 /**
@@ -15,5 +16,7 @@ public class AuthTokenVO {
     private Integer expiredIn;
 
     private String refreshToken;
+
+    private User user;
 
 }

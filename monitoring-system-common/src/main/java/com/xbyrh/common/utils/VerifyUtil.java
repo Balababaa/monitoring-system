@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
@@ -218,6 +219,23 @@ public class VerifyUtil {
         private String base64;
 
     }
+
+    public static void main(String[] args) throws IOException {
+        VerifyUtil.CodeImage codeImage = VerifyUtil.newBuilder()
+                .setWidth(160)   //设置图片的宽度
+                .setHeight(40)   //设置图片的高度
+                .setSize(6)      //设置字符的个数
+                .setLines(10)    //设置干扰线的条数
+                .setFontSize(25) //设置字体的大小
+                .setTilt(true)   //设置是否需要倾斜
+                .setBackgroundColor(Color.WHITE) //设置验证码的背景颜色
+                .build()         //构建VerifyUtil项目
+                .createImage();//生成图片
+
+        File outputfile = new File("saved.png");
+        ImageIO.write(codeImage.getImage(), "png", outputfile);
+        }
+
 }
 
 

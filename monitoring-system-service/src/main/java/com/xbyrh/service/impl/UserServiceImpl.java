@@ -4,8 +4,11 @@ import com.xbyrh.common.exception.NotFoundException;
 import com.xbyrh.repo.entity.User;
 import com.xbyrh.repo.entity.UserExample;
 import com.xbyrh.repo.mapper.UserMapper;
+import com.xbyrh.repo.model.bo.UserUpdateBO;
 import com.xbyrh.service.IUserService;
+import com.xbyrh.service.context.AuthContext;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +56,27 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getById(Long userId) {
         return userMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
+    public User update(UserUpdateBO userUpdateBO) {
+        User user = AuthContext.getUser();
+
+        if (StringUtils.isNotBlank(userUpdateBO.getNickname())) {
+            user.setNickname(userUpdateBO.getNickname());
+        }
+
+        if (StringUtils.isNotBlank(userUpdateBO.getAvatar())) {
+            user.setAvatar(userUpdateBO.getAvatar());
+        }
+        if (StringUtils.isNotBlank(userUpdateBO.getPassword())) {
+            user.setPassword(userUpdateBO.getPassword());
+        }
+
+        userMapper.updateByPrimaryKey(user);
+
+        AuthContext.setUser(user);
+
+        return user;
     }
 }

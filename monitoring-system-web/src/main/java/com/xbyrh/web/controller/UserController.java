@@ -2,16 +2,16 @@ package com.xbyrh.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.xbyrh.common.annotations.NoAuth;
+import com.xbyrh.repo.model.bo.UserUpdateBO;
+import com.xbyrh.repo.model.mapper.UserConverter;
+import com.xbyrh.repo.model.params.UserUpdateParam;
+import com.xbyrh.repo.model.vo.UserVO;
 import com.xbyrh.service.context.AuthContext;
 import com.xbyrh.common.utils.HttpUtil;
 import com.xbyrh.repo.entity.User;
 import com.xbyrh.service.IUserService;
 import com.xbyrh.web.model.dto.OpenIdDTO;
-import com.xbyrh.web.model.dto.UserDTO;
-import com.xbyrh.web.model.mapper.UserMapper;
 import com.xbyrh.web.model.params.OpenIdParam;
-import com.xbyrh.web.model.params.UserInfoParam;
-import com.xbyrh.repo.model.support.BaseResponse;
 import com.xbyrh.web.properties.OpenIdProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class UserController {
     private OpenIdProperties openIdProperties;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserConverter userConverter;
 
     @Autowired
     private IUserService userService;
@@ -45,16 +45,15 @@ public class UserController {
     }
 
     @GetMapping("detail")
-    public UserDTO detail(){
-        return userMapper.toDTO(AuthContext.getUser());
+    public UserVO detail(){
+        return userConverter.toVO(AuthContext.getUser());
     }
 
-    @NoAuth
     @PostMapping("modify")
-    public BaseResponse<String> modifyUserInfo(@RequestBody UserInfoParam userInfoParam){
-        User user = userMapper.fromParam(userInfoParam);
-
-        return BaseResponse.ok("");
+    public UserVO modifyUserInfo(@RequestBody UserUpdateParam userUpdateParam){
+        UserUpdateBO userUpdateBO = userConverter.toBO(userUpdateParam);
+        User user = userService.update(userUpdateBO);
+        return userConverter.toVO(AuthContext.getUser());
     }
 
 }
