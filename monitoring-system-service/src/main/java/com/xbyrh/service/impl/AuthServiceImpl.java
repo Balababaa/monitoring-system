@@ -1,23 +1,32 @@
 package com.xbyrh.service.impl;
 
 import cn.hutool.core.lang.Validator;
+import com.alibaba.fastjson.JSON;
 import com.xbyrh.common.constant.Constant;
 import com.xbyrh.common.constant.RedisKeyConstant;
+import com.xbyrh.common.enums.PermissionTypeEnum;
 import com.xbyrh.common.exception.BadRequestException;
 import com.xbyrh.common.exception.NotFoundException;
 import com.xbyrh.common.utils.HaloUtils;
+import com.xbyrh.repo.entity.Permission;
+import com.xbyrh.repo.entity.RolePermissionRef;
 import com.xbyrh.repo.entity.User;
+import com.xbyrh.repo.entity.UserRoleRef;
 import com.xbyrh.repo.model.bo.AuthTokenBO;
-import com.xbyrh.service.IAuthService;
-import com.xbyrh.service.IRedisService;
-import com.xbyrh.service.IUserService;
+import com.xbyrh.repo.model.vo.MenuVO;
+import com.xbyrh.service.*;
+import com.xbyrh.service.context.AuthContext;
 import com.xbyrh.service.properties.AccessTokenProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * create at 2021/4/16
@@ -35,6 +44,15 @@ public class AuthServiceImpl implements IAuthService {
     private AccessTokenProperties accessTokenProperties;
 
     @Autowired
+    private IRolePermissionRefService rolePermissionRefService;
+
+    @Autowired
+    private IUserRoleRefService userRoleRefService;
+
+    @Autowired
+    private IPermissionService permissionService;
+
+    @Autowired
     private IRedisService redisService;
 
     @Override
@@ -42,6 +60,40 @@ public class AuthServiceImpl implements IAuthService {
         User user = authPassword(username, password);
 
         return buildAuthToken(user);
+    }
+
+    @Override
+    public List<MenuVO> menu() {
+        User user = AuthContext.getUser();
+
+        List<UserRoleRef> userRoleRefList = userRoleRefService.findByUid(user.getUid());
+
+        if (CollectionUtils.isEmpty(userRoleRefList)) {
+            return new ArrayList<>();
+        }
+
+        List<Long> roleIdList = userRoleRefList.stream().map(UserRoleRef::getRoleId).collect(Collectors.toList());
+
+        List<RolePermissionRef> rolePermissionRefList = rolePermissionRefService.findByRoleIdList(roleIdList);
+
+        if (CollectionUtils.isEmpty(rolePermissionRefList)) {
+            return new ArrayList<>();
+        }
+
+        List<Long> permissionIdList = rolePermissionRefList.stream().map(RolePermissionRef::getPermissionId).collect(
+                Collectors.toList());
+
+        List<Permission> permissionList = permissionService.findByIdList(permissionIdList);
+
+        if (CollectionUtils.isEmpty(rolePermissionRefList)) {
+            return new ArrayList<>();
+        }
+
+        return permissionList.stream().filter(
+                x -> x.getType().equals(PermissionTypeEnum.MENU.getCode())).map(
+                x -> JSON.parseObject(x.getPath(), MenuVO.class)).collect(
+                Collectors.toList());
+
     }
 
     private AuthTokenBO buildAuthToken(User user) {
@@ -61,9 +113,9 @@ public class AuthServiceImpl implements IAuthService {
 
         // Cache those tokens with user id
         redisService.set(RedisKeyConstant.ACCESS_TOKEN_CACHE_PREFIX + token.getAccessToken(), user.getId().toString(),
-                Constant.ACCESS_TOKEN_EXPIRED_SECONDS, TimeUnit.SECONDS);
+                         Constant.ACCESS_TOKEN_EXPIRED_SECONDS, TimeUnit.SECONDS);
         redisService.set(RedisKeyConstant.REFRESH_TOKEN_CACHE_PREFIX + token.getRefreshToken(), user.getId().toString(),
-                Constant.REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.SECONDS);
+                         Constant.REFRESH_TOKEN_EXPIRED_DAYS, TimeUnit.SECONDS);
 
         return token;
     }

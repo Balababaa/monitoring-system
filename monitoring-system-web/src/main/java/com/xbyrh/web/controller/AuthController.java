@@ -4,6 +4,7 @@ import com.xbyrh.common.annotations.NoAuth;
 import com.xbyrh.common.exception.BadRequestException;
 import com.xbyrh.common.utils.VerifyUtil;
 import com.xbyrh.repo.model.mapper.AuthTokenMapper;
+import com.xbyrh.repo.model.vo.MenuVO;
 import com.xbyrh.service.IAuthService;
 import com.xbyrh.repo.model.bo.AuthTokenBO;
 import com.xbyrh.web.model.params.LoginParam;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * create at 2021/4/16
@@ -71,6 +73,11 @@ public class AuthController {
         session.setAttribute("SESSION_VERIFY_CODE_" + id, codeImage.getCode());
 
         return BaseResponse.ok("data:image/png;base64," + codeImage.getBase64());
+    }
+
+    @GetMapping("menu")
+    public List<MenuVO> menu(){
+        return authService.menu();
     }
 
 }

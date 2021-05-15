@@ -32,11 +32,40 @@
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
 <!--        <table tableName="users"-->
 <!--               domainObjectName="User"-->
-<!--               enableCountByExample="false"-->
+<!--               enableCountByExample="true"-->
 <!--               enableUpdateByExample="false"-->
 <!--               enableDeleteByExample="false"-->
 <!--               enableSelectByExample="true"-->
 <!--               selectByExampleQueryId="false" />-->
+
+<!--        <table tableName="role"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="false" />-->
+
+<!--        <table tableName="user_role_ref"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="false" />-->
+
+<!--        <table tableName="role_permission_ref"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="false" />-->
+
+        <table tableName="permission"
+               enableCountByExample="true"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="true"
+               selectByExampleQueryId="false" />
+
 
 <!--        <table tableName="device"-->
 <!--               enableCountByExample="true"-->
@@ -47,14 +76,14 @@
 <!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
 <!--        </table>-->
 
-        <table tableName="video_file"
-               enableCountByExample="true"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="true"
-               selectByExampleQueryId="false" >
-                        <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
+<!--        <table tableName="video_file"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="false" >-->
+<!--                        <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--        </table>-->
 
 <!--        <table tableName="device_user_ref"-->
 <!--               enableCountByExample="false"-->

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xbyrh.repo.mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.xbyrh.repo.entity.User" >
+<mapper namespace="com.xbyrh.repo.mapper.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.xbyrh.repo.entity.Permission" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="uid" property="uid" jdbcType="BIGINT" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
-    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -43,16 +42,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, uid, username, nickname, password, email, avatar, is_delete, create_time, update_time
+    id, name, code, type, path, modifier, creator, create_time, update_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xbyrh.repo.entity.UserExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xbyrh.repo.entity.PermissionExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from users
+    from permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -71,49 +70,46 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from users
+    from permission
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from users
+    delete from permission
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.xbyrh.repo.entity.User" >
-    insert into users (id, uid, username, 
-      nickname, password, email, 
-      avatar, is_delete, create_time, 
-      update_time)
-    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{avatar,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.xbyrh.repo.entity.Permission" >
+    insert into permission (id, name, code, 
+      type, path, modifier, 
+      creator, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{modifier,jdbcType=BIGINT}, 
+      #{creator,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.xbyrh.repo.entity.User" >
-    insert into users
+  <insert id="insertSelective" parameterType="com.xbyrh.repo.entity.Permission" >
+    insert into permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="uid != null" >
-        uid,
+      <if test="name != null" >
+        name,
       </if>
-      <if test="username != null" >
-        username,
+      <if test="code != null" >
+        code,
       </if>
-      <if test="nickname != null" >
-        nickname,
+      <if test="type != null" >
+        type,
       </if>
-      <if test="password != null" >
-        password,
+      <if test="path != null" >
+        path,
       </if>
-      <if test="email != null" >
-        email,
+      <if test="modifier != null" >
+        modifier,
       </if>
-      <if test="avatar != null" >
-        avatar,
-      </if>
-      <if test="isDelete != null" >
-        is_delete,
+      <if test="creator != null" >
+        creator,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -126,26 +122,23 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="uid != null" >
-        #{uid,jdbcType=BIGINT},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        #{nickname,jdbcType=VARCHAR},
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
       </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
+      <if test="modifier != null" >
+        #{modifier,jdbcType=BIGINT},
       </if>
-      <if test="avatar != null" >
-        #{avatar,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null" >
-        #{isDelete,jdbcType=INTEGER},
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -155,35 +148,32 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xbyrh.repo.entity.UserExample" resultType="java.lang.Integer" >
-    select count(*) from users
+  <select id="countByExample" parameterType="com.xbyrh.repo.entity.PermissionExample" resultType="java.lang.Integer" >
+    select count(*) from permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xbyrh.repo.entity.User" >
-    update users
+  <update id="updateByPrimaryKeySelective" parameterType="com.xbyrh.repo.entity.Permission" >
+    update permission
     <set >
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=BIGINT},
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        nickname = #{nickname,jdbcType=VARCHAR},
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
       </if>
-      <if test="email != null" >
-        email = #{email,jdbcType=VARCHAR},
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=BIGINT},
       </if>
-      <if test="avatar != null" >
-        avatar = #{avatar,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null" >
-        is_delete = #{isDelete,jdbcType=INTEGER},
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -194,15 +184,14 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xbyrh.repo.entity.User" >
-    update users
-    set uid = #{uid,jdbcType=BIGINT},
-      username = #{username,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      avatar = #{avatar,jdbcType=VARCHAR},
-      is_delete = #{isDelete,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.xbyrh.repo.entity.Permission" >
+    update permission
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      modifier = #{modifier,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

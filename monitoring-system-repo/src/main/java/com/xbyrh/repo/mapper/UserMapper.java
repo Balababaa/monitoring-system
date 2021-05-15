@@ -5,6 +5,8 @@ import com.xbyrh.repo.entity.UserExample;
 import java.util.List;
 
 public interface UserMapper {
+    int countByExample(UserExample example);
+
     int deleteByPrimaryKey(Long id);
 
     int insert(User record);
