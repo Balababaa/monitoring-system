@@ -56,7 +56,7 @@ public class VideoStreamGrabTask implements Runnable {
 
         Date startTime = new Date();
         String startTimeString = DateUtil.dateToString(startTime, "yyyy-MM-dd-HH-mm-ss");
-        String fileName = startTimeString + ".mp4";
+        String fileName = deviceId+"-"+startTimeString + ".mp4";
         log.info("开始录制，文件名: {}", fileName);
 
         FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(fileName, 1280, 720);
@@ -75,7 +75,7 @@ public class VideoStreamGrabTask implements Runnable {
                 recorder.record(frame);
                 // 每一分钟结束一次录制
                 instance = Calendar.getInstance();
-                if (instance.getTime().getTime() - startTime.getTime() >= 1000 * 60) {
+                if (instance.getTime().getTime() - startTime.getTime() >= 1000 * 80) {
                     log.info("一次录制成功，{} {}", deviceId, startTimeString);
                     break;
                 }

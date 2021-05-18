@@ -48,7 +48,7 @@ public class VideoStreamGrabTaskInitiator implements InitializingBean {
     }
 
 
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "50 * * * * ?")
     public void record() {
         List<Device> deviceList = deviceService.getAll();
         log.info("开始录制, {}", deviceList);
