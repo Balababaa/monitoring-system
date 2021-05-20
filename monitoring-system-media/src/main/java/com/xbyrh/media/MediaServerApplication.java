@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication(scanBasePackages = "com.xbyrh")
 @MapperScan("com.xbyrh.repo.mapper")
-@EnableScheduling
+//@EnableScheduling
 public class MediaServerApplication {
 
     public static void main(String[] args) {

@@ -55,5 +55,20 @@ public class VideoFileController {
         return PaginationResponse.ok(total, videoFileConverter.toVOList(videoFileBOList));
     }
 
+    @NoAuth
+    @GetMapping("/play/{filename:.+}")
+    public ResponseEntity<Resource> play(@PathVariable("filename") String filename, HttpServletResponse response) {
+
+        Resource resource = new FileSystemResource(new File(filename));
+
+        String contentType = "video/mp4";
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
 }
 

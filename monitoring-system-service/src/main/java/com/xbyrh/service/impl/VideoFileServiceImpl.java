@@ -42,8 +42,10 @@ public class VideoFileServiceImpl implements IVideoFileService {
         }
 
         if (StringUtils.isNotBlank(endTime)) {
-            criteria.andEndTimeGreaterThan(DateUtil.stringToDate(endTime));
+            criteria.andEndTimeLessThan(DateUtil.stringToDate(endTime));
         }
+
+        criteria.andIsDeleteEqualTo(0);
 
         example.setLimit(limit);
         example.setOffset((page - 1) * limit);
@@ -68,8 +70,10 @@ public class VideoFileServiceImpl implements IVideoFileService {
         }
 
         if (StringUtils.isNotBlank(endTime)) {
-            criteria.andEndTimeGreaterThan(DateUtil.stringToDate(endTime));
+            criteria.andEndTimeLessThan(DateUtil.stringToDate(endTime));
         }
+
+        criteria.andIsDeleteEqualTo(0);
 
         return (long) videoFileMapper.countByExample(example);
     }
