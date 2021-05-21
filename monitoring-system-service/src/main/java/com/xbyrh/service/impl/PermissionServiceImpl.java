@@ -1,6 +1,7 @@
 package com.xbyrh.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.xbyrh.common.exception.AlreadyExistException;
 import com.xbyrh.repo.entity.*;
 import com.xbyrh.repo.mapper.PermissionMapper;
 import com.xbyrh.repo.model.bo.PermissionSaveBO;
@@ -50,6 +51,11 @@ public class PermissionServiceImpl implements IPermissionService {
 
     @Override
     public void save(PermissionSaveBO permissionSaveBO) {
+
+        if (findByCode(permissionSaveBO.getCode())!=null) {
+            throw new AlreadyExistException(permissionSaveBO.getCode()+" 已经存在");
+        }
+
         Permission permission = new Permission();
         permission.setName(permissionSaveBO.getName());
         permission.setCode(permissionSaveBO.getCode());

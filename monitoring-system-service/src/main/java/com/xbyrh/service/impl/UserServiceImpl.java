@@ -1,5 +1,6 @@
 package com.xbyrh.service.impl;
 
+import com.xbyrh.common.exception.AlreadyExistException;
 import com.xbyrh.common.exception.NotFoundException;
 import com.xbyrh.repo.entity.Role;
 import com.xbyrh.repo.entity.User;
@@ -133,6 +134,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void save(UserSaveBO userSaveBO) {
+
+        if (getByUsername(userSaveBO.getUsername())!=null) {
+            throw new AlreadyExistException(userSaveBO.getUsername()+" 已经存在");
+        }
+
         User user = new User();
         user.setUid(userSaveBO.getUid());
         user.setUsername(userSaveBO.getUsername());

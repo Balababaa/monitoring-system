@@ -1,6 +1,7 @@
 package com.xbyrh.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.xbyrh.common.exception.AlreadyExistException;
 import com.xbyrh.repo.entity.*;
 import com.xbyrh.repo.mapper.RoleMapper;
 import com.xbyrh.repo.model.bo.RoleBO;
@@ -87,6 +88,11 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public void save(RoleSaveBO roleSaveBO) {
+
+        if (findByCode(roleSaveBO.getCode())!=null) {
+            throw new AlreadyExistException(roleSaveBO.getCode()+" 已经存在");
+        }
+
         Role role = new Role();
         role.setName(roleSaveBO.getName());
         role.setCode(roleSaveBO.getCode());
