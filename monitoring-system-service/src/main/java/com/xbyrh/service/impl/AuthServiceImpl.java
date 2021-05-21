@@ -62,11 +62,8 @@ public class AuthServiceImpl implements IAuthService {
         return buildAuthToken(user);
     }
 
-    @Override
-    public List<MenuVO> menu() {
-        User user = AuthContext.getUser();
-
-        List<UserRoleRef> userRoleRefList = userRoleRefService.findByUid(user.getUid());
+    private List<Permission> getPermission(Long uid){
+        List<UserRoleRef> userRoleRefList = userRoleRefService.findByUid(uid);
 
         if (CollectionUtils.isEmpty(userRoleRefList)) {
             return new ArrayList<>();
@@ -89,11 +86,25 @@ public class AuthServiceImpl implements IAuthService {
             return new ArrayList<>();
         }
 
+        return permissionList;
+    }
+
+
+    @Override
+    public List<MenuVO> menu() {
+        User user = AuthContext.getUser();
+        List<Permission> permissionList = getPermission(user.getUid());
         return permissionList.stream().filter(
                 x -> x.getType().equals(PermissionTypeEnum.MENU.getCode())).map(
                 x -> JSON.parseObject(x.getPath(), MenuVO.class)).collect(
                 Collectors.toList());
+    }
 
+    @Override
+    public List<String> getPermissionCodeList(Long uid) {
+        List<Permission> permissionList = getPermission(uid);
+
+        return permissionList.stream().map(Permission::getCode).collect(Collectors.toList());
     }
 
     private AuthTokenBO buildAuthToken(User user) {

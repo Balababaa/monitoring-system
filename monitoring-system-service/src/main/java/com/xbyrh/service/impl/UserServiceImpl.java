@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -135,9 +136,20 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void save(UserSaveBO userSaveBO) {
 
-        if (getByUsername(userSaveBO.getUsername())!=null) {
-            throw new AlreadyExistException(userSaveBO.getUsername()+" 已经存在");
+        try {
+            if (getByUsername(userSaveBO.getUsername()) != null) {
+                throw new AlreadyExistException("用户名: " + userSaveBO.getUsername() + " 已经存在");
+            }
+
+
+        } catch (NotFoundException ignored) {
         }
+
+        try {
+            if (getByUid(userSaveBO.getUid()) != null) {
+                throw new AlreadyExistException("UID: " + userSaveBO.getUsername() + " 已经存在");
+            }
+        }catch (NotFoundException ignored){}
 
         User user = new User();
         user.setUid(userSaveBO.getUid());
@@ -148,6 +160,19 @@ public class UserServiceImpl implements IUserService {
         user.setAvatar("https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png");
 
         userMapper.insertSelective(user);
+    }
+
+    private User getByUid(Long uid) {
+        UserExample example = new UserExample();
+        example.createCriteria().andUidEqualTo(uid);
+
+        List<User> userList = userMapper.selectByExample(example);
+
+        if (CollectionUtils.isEmpty(userList)) {
+            throw new NotFoundException(String.format("user(uid = %s) not found!", uid));
+        }
+
+        return userList.get(0);
     }
 
     @Override

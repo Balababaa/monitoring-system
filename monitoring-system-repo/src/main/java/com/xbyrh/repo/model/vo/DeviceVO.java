@@ -14,7 +14,9 @@ public class DeviceVO {
 
     private String deviceName;
 
-    private String deviceType;
+    private Integer deviceType;
+
+    private String deviceTypeStr;
 
     private String httpFlvUrl;
 

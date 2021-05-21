@@ -16,4 +16,5 @@ public interface IAuthService {
 
     List<MenuVO> menu();
 
+    List<String> getPermissionCodeList(Long uid);
 }

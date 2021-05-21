@@ -1,5 +1,7 @@
 package com.xbyrh.web.controller;
 
+import com.xbyrh.common.annotations.Permission;
+import com.xbyrh.common.enums.PermissionEnum;
 import com.xbyrh.service.context.AuthContext;
 import com.xbyrh.repo.entity.Device;
 import com.xbyrh.repo.entity.User;
@@ -48,20 +50,23 @@ public class DeviceController {
     }
 
     @PostMapping("save")
+    @Permission(value = PermissionEnum.ADD_DEVICE)
     public BaseResponse<String> save(@RequestBody DeviceAddParam deviceAddParam) {
         DeviceBO deviceBO = deviceMapper.toBO(deviceAddParam);
         deviceService.save(deviceBO);
         return BaseResponse.ok();
     }
 
-    @PostMapping("delete")
-    public BaseResponse<String> delete(@RequestBody DeviceDeleteParam deviceDeleteParam) {
-        deviceService.delete(deviceDeleteParam.getId());
+    @PostMapping("modify")
+    @Permission(value = PermissionEnum.MODIFY_DEVICE)
+    public BaseResponse<String> modify(@RequestBody DeviceAddParam deviceAddParam) {
+        DeviceBO deviceBO = deviceMapper.toBO(deviceAddParam);
+        deviceService.save(deviceBO);
         return BaseResponse.ok();
     }
 
-
     @PostMapping("delete/status")
+    @Permission(value = PermissionEnum.DELETE_DEVICE)
     public BaseResponse<String> updateDeleteStatus(@RequestBody DeviceDeleteParam deviceDeleteParam) {
         deviceService.updateDeleteStatus(deviceDeleteParam.getId());
         return BaseResponse.ok();

@@ -22,7 +22,7 @@ public interface DeviceMapper {
     @Mapping(source = "createTime", target = "createTime", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @Mapping(source = "updateTime", target = "updateTime", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @Mapping(source = "isDelete", target = "isDelete", qualifiedByName = "isDeleteMapper")
-    @Mapping(source = "deviceType", target = "deviceType", qualifiedByName = "deviceTypeMapper")
+    @Mapping(source = "deviceType", target = "deviceTypeStr", qualifiedByName = "deviceTypeMapper")
     DeviceVO toVO(Device device);
 
     List<DeviceVO> toVOList(List<Device> deviceList);
